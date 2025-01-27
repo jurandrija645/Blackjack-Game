@@ -1,15 +1,37 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="index.css">
-    </head>
-    <body>
-        <h1>Blackjack</h1>
-        <p id="message-el">Want to play a round?</p>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+    <title>Blackjack</title>
+  </head>
+  <body>
+    <h1>Blackjack</h1>
+    <div class="players">
+      <div class="player">
+        <h2>Player</h2>
         <p id="cards-el">Cards:</p>
         <p id="sum-el">Sum:</p>
-        <button onclick="startGame()">START GAME</button>
-        <button onclick="newCard()">NEW CARD</button>
         <p id="player-el"></p>
-        <script src="index.js"></script>
-    </body>
+      </div>
+      <div class="player">
+        <h2>Dealer</h2>
+        <p id="cards-el-dealer">Cards:</p>
+        <p id="sum-el-dealer">Sum:</p>
+        <p id="dealer-el"></p>
+      </div>
+    </div>
+    <p id="message-el">Want to play a round?</p>
+
+    <div class="cards">
+      <div>
+        <button onclick="startGame()">START GAME</button>
+        <button onclick="startGame()">RESTART</button>
+      </div>
+      <div>
+        <button onclick="newCard()">HIT</button>
+        <button onclick="endturn()">STAND</button>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
 </html>
