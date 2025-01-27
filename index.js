@@ -13,6 +13,9 @@ let dealer = {
 };
 
 let name = prompt("Enter your name: ");
+if (!name) {
+  name = "Player";
+}
 let playername = document.getElementById("player-name");
 playername.textContent = name;
 
