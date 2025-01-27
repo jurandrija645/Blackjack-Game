@@ -1,12 +1,3 @@
-window.onload = function () {
-  // Prompt for player's name
-  //const playerName = prompt("Please enter your name!");
-
-  // Update the player object with the entered name
-  player.name = playerName || "Player"; // Default to "Player" if no name is entered
-  playerEl.textContent = player.name + ": $" + player.chips;
-};
-
 let player = {
   name: "Player",
   chips: 200,
@@ -20,6 +11,10 @@ let dealer = {
   cards: [],
   sum: 0,
 };
+
+let name = prompt("Enter your name: ");
+let playername = document.getElementById("player-name");
+playername.textContent = name;
 
 let sum = 0;
 let hasBlackJack = false;
