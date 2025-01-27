@@ -31,11 +31,15 @@ let playerEl = document.getElementById("player-el");
 let dealerSumEl = document.getElementById("sum-el-dealer");
 let dealerCardsEl = document.getElementById("cards-el-dealer");
 let dealerEl = document.getElementById("dealer-el");
+let hitbutton = document.getElementById("hit");
+let standbutton = document.getElementById("stand");
 
 playerEl.textContent = "$" + player.chips;
 dealerEl.textContent = "$" + dealer.chips;
 
 function endturn() {
+  hitbutton.disabled = true;
+  standbutton.disabled = true;
   dealersTurn = true;
   dealer.cards.push(getRandomCard());
   dealer.cards.push(getRandomCard());
@@ -89,6 +93,8 @@ function getRandomCard() {
 }
 
 function startGame() {
+  hitbutton.disabled = false;
+  standbutton.disabled = false;
   dealer.cards = [];
   dealer.sum = 0;
   dealersTurn = false;
@@ -121,7 +127,7 @@ function renderGame() {
     isAlive = false;
   }
 
-  if (dealersTurn) {
+  if (dealersTurn && player.sum <= 21) {
     if (dealer.sum > 21) {
       message = "Dealer busted! You win!";
       //player.chips += 10;
@@ -136,6 +142,10 @@ function renderGame() {
     }
   }
   messageEl.textContent = message;
+
+  if (dealersTurn) {
+    endgame();
+  }
 }
 
 function newCard() {
@@ -144,5 +154,20 @@ function newCard() {
     player.sum += card;
     player.cards.push(card);
     renderGame();
+  }
+}
+
+function endgame() {
+  if (message === "You win!") {
+    player.chips += 10;
+  } else if (message === "Dealer wins!") {
+    player.chips -= 10;
+  }
+  playerEl.textContent = "$" + player.chips;
+  dealerEl.textContent = "$" + dealer.chips;
+
+  if (player.chips <= 0) {
+    message = "You've run out of chips! Game over!";
+    messageEl.textContent = message;
   }
 }
