@@ -7,13 +7,19 @@
     <h1>Blackjack</h1>
     <div class="players">
       <div class="player">
-        <h2 id="player-name">Player</h2>
+        <div class="turn">
+          <h2 id="player-name">Player</h2>
+          <div id="player-square" class="square"></div>
+        </div>
         <p id="cards-el">Cards:</p>
         <p id="sum-el">Sum:</p>
         <p id="player-el"></p>
       </div>
       <div class="player">
-        <h2>Dealer</h2>
+        <div class="turn">
+          <h2>Dealer</h2>
+          <div id="dealer-square" class="square"></div>
+        </div>
         <p id="cards-el-dealer">Cards:</p>
         <p id="sum-el-dealer">Sum:</p>
         <p id="dealer-el"></p>
@@ -23,12 +29,15 @@
 
     <div class="buttons">
       <div>
-        <button onclick="startGame()">START GAME</button>
-        <button onclick="startGame()">RESTART</button>
+        <button id="start" onclick="startGame()">START GAME</button>
       </div>
       <div>
-        <button id="hit" onclick="newCard()">HIT</button>
-        <button id="stand" onclick="endturn()">STAND</button>
+        <button class="disabledbuttons" id="hit" onclick="newCard()">
+          HIT
+        </button>
+        <button class="disabledbuttons" id="stand" onclick="endturn()">
+          STAND
+        </button>
       </div>
     </div>
 

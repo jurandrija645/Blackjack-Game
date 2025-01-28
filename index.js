@@ -12,14 +12,16 @@ let dealer = {
   sum: 0,
 };
 
-let name = prompt("Enter your name: ");
+//let name = prompt("Enter your name: ");
 if (!name) {
   name = "Player";
 }
 let playername = document.getElementById("player-name");
 playername.textContent = name;
 
+let win = 0;
 let sum = 0;
+let pot = 25;
 let hasBlackJack = false;
 let isAlive = false;
 let dealersTurn = false;
@@ -33,13 +35,25 @@ let dealerCardsEl = document.getElementById("cards-el-dealer");
 let dealerEl = document.getElementById("dealer-el");
 let hitbutton = document.getElementById("hit");
 let standbutton = document.getElementById("stand");
+let startbutton = document.getElementById("start");
+let dealerSquare = document.getElementById("dealer-square");
+let playerSquare = document.getElementById("player-square");
+dealerSquare.style.visibility = "hidden";
+playerSquare.style.visibility = "hidden";
+
+toggleButton(hitbutton, false);
+toggleButton(standbutton, false);
+toggleButton(startbutton, true);
 
 playerEl.textContent = "$" + player.chips;
 dealerEl.textContent = "$" + dealer.chips;
 
 function endturn() {
-  hitbutton.disabled = true;
-  standbutton.disabled = true;
+  toggleButton(hitbutton, false);
+  toggleButton(standbutton, false);
+  playerSquare.style.visibility = "hidden";
+  dealerSquare.style.visibility = "visible";
+
   dealersTurn = true;
   dealer.cards.push(getRandomCard());
   dealer.cards.push(getRandomCard());
@@ -93,8 +107,12 @@ function getRandomCard() {
 }
 
 function startGame() {
-  hitbutton.disabled = false;
-  standbutton.disabled = false;
+  toggleButton(hitbutton, true);
+  toggleButton(standbutton, true);
+  toggleButton(startbutton, false);
+  playerSquare.style.visibility = "visible";
+  dealerSquare.style.visibility = "hidden";
+
   dealer.cards = [];
   dealer.sum = 0;
   dealersTurn = false;
@@ -125,18 +143,19 @@ function renderGame() {
   } else {
     message = "You're out of the game!";
     isAlive = false;
+    endgame();
   }
 
   if (dealersTurn && player.sum <= 21) {
     if (dealer.sum > 21) {
       message = "Dealer busted! You win!";
-      //player.chips += 10;
+      //player.chips += pot;
     } else if (dealer.sum > player.sum) {
       message = "Dealer wins!";
-      //player.chips -= 10;
+      //player.chips -= pot;
     } else if (dealer.sum < player.sum) {
       message = "You win!";
-      //player.chips += 10;
+      //player.chips += pot;
     } else {
       message = "It's a tie!";
     }
@@ -158,16 +177,46 @@ function newCard() {
 }
 
 function endgame() {
-  if (message === "You win!") {
-    player.chips += 10;
-  } else if (message === "Dealer wins!") {
-    player.chips -= 10;
+  toggleButton(startbutton, true);
+  toggleButton(hitbutton, false);
+  toggleButton(standbutton, false);
+  if (player.sum > 21) {
+    message = "You're out of the game!";
+    player.chips -= pot;
+    dealer.chips += pot;
+  } else if (dealer.sum > 21) {
+    message = "Dealer busted! You win!";
+    player.chips += pot;
+    dealer.chips -= pot;
+  } else if (player.sum > dealer.sum) {
+    message = "You win!";
+    player.chips += pot;
+    dealer.chips -= pot;
+  } else if (player.sum < dealer.sum) {
+    message = "Dealer wins!";
+    player.chips -= pot;
+    dealer.chips += pot;
+  } else if (player.sum === dealer.sum) {
+    message = "It's a tie!";
   }
+
   playerEl.textContent = "$" + player.chips;
   dealerEl.textContent = "$" + dealer.chips;
 
   if (player.chips <= 0) {
     message = "You've run out of chips! Game over!";
-    messageEl.textContent = message;
+  }
+  messageEl.textContent = message;
+}
+
+function toggleButton(button, enable) {
+  if (enable) {
+    button.disabled = false;
+    button.style.opacity = "1";
+    button.style.cursor = "pointer";
+  } else {
+    button.disabled = true;
+    button.style.opacity = "0.5";
+    button.style.cursor = "default";
   }
 }
