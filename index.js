@@ -207,6 +207,7 @@ function endgame() {
     message = "You've run out of chips! Game over!";
   }
   messageEl.textContent = message;
+  hasBlackJack = false;
 }
 
 function toggleButton(button, enable) {
