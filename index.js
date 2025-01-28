@@ -149,13 +149,10 @@ function renderGame() {
   if (dealersTurn && player.sum <= 21) {
     if (dealer.sum > 21) {
       message = "Dealer busted! You win!";
-      //player.chips += pot;
     } else if (dealer.sum > player.sum) {
       message = "Dealer wins!";
-      //player.chips -= pot;
     } else if (dealer.sum < player.sum) {
       message = "You win!";
-      //player.chips += pot;
     } else {
       message = "It's a tie!";
     }
@@ -210,6 +207,7 @@ function endgame() {
   hasBlackJack = false;
 }
 
+//enabling and disabeling buttons
 function toggleButton(button, enable) {
   if (enable) {
     button.disabled = false;
